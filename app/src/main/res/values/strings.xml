@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">CircuitSolver</string>
+    <string name="label">Label</string>
+    <string name="add_circuit_component">Add circuit component</string>
+    <string name="wire">Wire</string>
+    <string name="gate">Gate</string>
+    <string name="one_digit_entry">Label must only have one digit</string>
+    <string name="cannot_connect_two_gates">Cannot connect two gates directly</string>
+    <string name="solve">Solve</string>
+    <string name="export">Export</string>
+    <string name="import_circuit">Import</string>
+    <string name="clear">Clear</string>
+    <string name="file_name_between_3_and_23">File name must be between 3 and 23 characters long</string>
+</resources>
