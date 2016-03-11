@@ -13,10 +13,37 @@
         android:layout_marginTop="@dimen/activity_horizontal_margin">
 
         <EditText
-            android:id="@+id/txt_file_name"
+            android:id="@+id/txt_solution_file_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/label"/>
+            android:hint="@string/solution_file"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_horizontal_margin">
+
+        <EditText
+            android:id="@+id/txt_start_wire"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/start_wire"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_horizontal_margin">
+
+        <EditText
+            android:id="@+id/txt_end_wire"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/end_wire"/>
 
     </android.support.design.widget.TextInputLayout>
 
