@@ -5,22 +5,38 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import gerardogtn.com.circuitsolver.R;
+import gerardogtn.com.circuitsolver.data.model.Circuit;
+import gerardogtn.com.circuitsolver.util.exception.CircuitComponentNotFoundException;
 
 /**
  * Created by gerardogtn on 2/18/16.
  */
 public class SolveCircuitOptionsDialog extends DialogFragment {
 
+    public static final String TAG = "SolveCircuitDialog";
+
     private View.OnClickListener mOnSolveCircuitClickListener;
     private DialogInterface.OnShowListener mOnShowListener;
-    private EditText mFileNameEditText;
+
+    @Bind(R.id.txt_start_wire)
+    EditText mStartWireEditText;
+
+    @Bind(R.id.txt_end_wire)
+    EditText mEndWireEditText;
+
+    @Bind(R.id.txt_solution_file_name)
+    EditText mFileNameEditText;
 
     private static OnCircuitSolveListener sCircuitSolveListener;
 
@@ -29,13 +45,17 @@ public class SolveCircuitOptionsDialog extends DialogFragment {
         return new SolveCircuitOptionsDialog();
     }
 
+    public static void setOnCircuitSolveListener(OnCircuitSolveListener listener) {
+        sCircuitSolveListener = listener;
+    }
+
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Context context = getActivity();
         View v = LayoutInflater.from(context).inflate(R.layout.dialog_solve_circuit_options, null);
+        ButterKnife.bind(this, v);
         setUpOnSolveCircuitClickListener();
-        mFileNameEditText = (EditText) v.findViewById(R.id.txt_file_name);
 
         AlertDialog dialog = new AlertDialog.Builder(context)
                 .setView(v)
@@ -53,13 +73,41 @@ public class SolveCircuitOptionsDialog extends DialogFragment {
         mOnSolveCircuitClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (isLabelEntryValid()) {
+                if (areEntriesValid()) {
                     solveCircuit();
-                } else {
-                    indicateEntryIsInvalid();
                 }
             }
         };
+    }
+
+    private boolean areEntriesValid() {
+        boolean output = true;
+        if (!isFileNameValid()) {
+            mFileNameEditText.setError(getActivity().getString(R.string.file_name_between_3_and_23));
+            output = false;
+        } else if (!isLabelWire(mStartWireEditText.getText().toString())){
+            mStartWireEditText.setError(getActivity().getString(R.string.label_is_not_wire));
+            output = false;
+        } else if (!isLabelWire(mEndWireEditText.getText().toString())){
+            mEndWireEditText.setError(getActivity().getString(R.string.label_is_not_wire));
+            output = false;
+        }
+        return output;
+    }
+
+    private boolean isFileNameValid() {
+        int nameLength = mFileNameEditText.getText().toString().length();
+        return nameLength > 2 && nameLength < 23;
+    }
+
+    // TODO: Change set wire for method that just checks if is wire.
+    private boolean isLabelWire(String wireLabel) {
+        try {
+            Circuit.getInstance().setStartWire(wireLabel);
+            return true;
+        } catch (CircuitComponentNotFoundException e) {
+            return false;
+        }
     }
 
     private void setUpOnShowListener(final AlertDialog alertDialog) {
@@ -72,19 +120,18 @@ public class SolveCircuitOptionsDialog extends DialogFragment {
         };
     }
 
-    private boolean isLabelEntryValid() {
-        String label = mFileNameEditText.getText().toString();
-        return label.length() > 3 && label.length() < 23;
-    }
-
     private void solveCircuit() {
+        if (sCircuitSolveListener != null) {
+            Circuit.getInstance().setStartWire(mStartWireEditText.getText().toString());
+            Circuit.getInstance().setEndWire(mEndWireEditText.getText().toString());
+
+            sCircuitSolveListener.
+                    writeCircuitSolutionsToFileWithName(mFileNameEditText.getText().toString());
+
+        } else {
+            // TODO: Use event bus to comunicate error sending and process error code in MainActivity.
+        }
         dismiss();
-        sCircuitSolveListener.writeCircuitSolutionsToFileWithName(mFileNameEditText.getText().toString());
-    }
-
-
-    private void indicateEntryIsInvalid() {
-        mFileNameEditText.setError(getActivity().getString(R.string.file_name_between_3_and_23));
     }
 
     public interface OnCircuitSolveListener {
