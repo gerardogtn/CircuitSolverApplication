@@ -9,6 +9,8 @@ public class CircuitViewSizeConstant {
     public static float sTextSize = 24 * sScreenDensity;
     public static float sStrokeWidth = 5 * sScreenDensity;
 
-    public static float sCircuitComponentRadius = 40 * sScreenDensity;
+    public static float sCircuitComponentRadius = 30 * sScreenDensity;
     public static float sDirectionIndicatorRadius = 10 * sScreenDensity;
+
+    public static float sSquareHalfSide = 40 * sScreenDensity;
 }

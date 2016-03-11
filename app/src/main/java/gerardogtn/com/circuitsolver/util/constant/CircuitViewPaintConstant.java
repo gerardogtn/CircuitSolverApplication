@@ -21,6 +21,8 @@ public class CircuitViewPaintConstant {
         Paint paint = new Paint();
         paint.setColor(color);
         paint.setAntiAlias(true);
+        paint.setStyle(Paint.Style.FILL);
+        paint.setStrokeWidth(10);
         return paint;
     }
 

@@ -5,8 +5,8 @@ package gerardogtn.com.circuitsolver.data.model;
  */
 public abstract class CircuitComponent {
 
-    private static final float DEFAULT_X_POSITION = 100;
-    private static final float DEFAULT_Y_POSITION = 100;
+    private static final float DEFAULT_X_POSITION = 200;
+    private static final float DEFAULT_Y_POSITION = 200;
 
     private String label;
     private float x;

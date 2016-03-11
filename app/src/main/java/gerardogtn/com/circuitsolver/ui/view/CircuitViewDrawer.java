@@ -81,13 +81,33 @@ public class CircuitViewDrawer {
     public void drawComponents() {
         for (CircuitComponent component : mCircuit.getComponents()) {
             mCurrentDrawingComponent = component;
-            drawComponent();
+            if (component instanceof Gate) {
+                drawGate();
+            } else if (component instanceof Wire) {
+                drawWire();
+            }
         }
     }
 
-    private void drawComponent() {
+    private void drawGate() {
+        drawComponentSquare();
+        drawComponentLabel();
+    }
+
+    private void drawWire() {
         drawComponentCircle();
         drawComponentLabel();
+    }
+
+    private void drawComponentSquare() {
+        Paint paint = getPaintForComponent();
+        float y = getCenteredYCoordinate(paint);
+        mDrawCanvas.drawRect(mCurrentDrawingComponent.getX() - CircuitViewSizeConstant.sSquareHalfSide,
+                y - CircuitViewSizeConstant.sSquareHalfSide,
+                mCurrentDrawingComponent.getX() +  CircuitViewSizeConstant.sSquareHalfSide,
+                y + CircuitViewSizeConstant.sSquareHalfSide,
+                paint);
+
     }
 
     private void drawComponentCircle() {
