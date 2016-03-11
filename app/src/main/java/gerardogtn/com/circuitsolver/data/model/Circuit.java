@@ -126,4 +126,9 @@ public class Circuit {
                 + Math.pow(componentPosition.y - currentTouchPosition.y, 2)
                 < Math.pow(CircuitViewSizeConstant.sCircuitComponentRadius, 2);
     }
+
+    public void clear() {
+        components = new LinkedList<>();
+        connections = new ArrayList<>();
+    }
 }
