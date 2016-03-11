@@ -9,4 +9,8 @@ public class Wire extends CircuitComponent{
         super(label);
     }
 
+    @Override
+    public String toString() {
+        return getLabel();
+    }
 }

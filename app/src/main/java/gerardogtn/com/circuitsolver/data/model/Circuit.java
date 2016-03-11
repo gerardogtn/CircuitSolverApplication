@@ -2,6 +2,8 @@ package gerardogtn.com.circuitsolver.data.model;
 
 import android.graphics.PointF;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -16,10 +18,16 @@ import gerardogtn.com.circuitsolver.util.exception.CircuitComponentNotFoundExcep
  */
 public class Circuit {
 
+    @SerializedName("components")
     private LinkedList<CircuitComponent> components;
+
+    @SerializedName("connections")
     private List<CircuitConnection> connections;
 
+    @SerializedName("start_wire")
     private Wire startWire;
+
+    @SerializedName("end_wire")
     private Wire endWire;
 
     private static Circuit mInstance;
@@ -41,13 +49,22 @@ public class Circuit {
         return mInstance;
     }
 
-
     public Wire getEndWire() {
         return endWire;
     }
 
     public void setEndWire(Wire endWire) {
         this.endWire = endWire;
+    }
+
+    public void setEndWire(String endWireLabel) {
+        for (CircuitComponent component : components) {
+            if (component.getLabel().equals(endWireLabel)) {
+                this.endWire = (Wire) component;
+                return;
+            }
+        }
+        throw new CircuitComponentNotFoundException();
     }
 
     public Wire getStartWire() {
@@ -58,12 +75,32 @@ public class Circuit {
         this.startWire = startWire;
     }
 
+    public void setStartWire(String startWireLabel) {
+        for (CircuitComponent component : components) {
+            if (component instanceof  Wire && component.getLabel().equals(startWireLabel)) {
+                this.startWire = (Wire) component;
+                return;
+            }
+        }
+        throw new CircuitComponentNotFoundException();
+    }
+
     public List<CircuitConnection> getConnections() {
         return connections;
     }
 
     public List<CircuitComponent> getComponents() {
         return components;
+    }
+
+    public LinkedList<Wire> getWires() {
+        LinkedList<Wire> wires = new LinkedList<>();
+        for (CircuitComponent c : components) {
+            if (c instanceof Wire) {
+                wires.add((Wire) c);
+            }
+        }
+        return  wires;
     }
 
     public void addComponent(CircuitComponent component) {
