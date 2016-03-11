@@ -59,7 +59,7 @@ public class Circuit {
 
     public void setEndWire(String endWireLabel) {
         for (CircuitComponent component : components) {
-            if (component.getLabel().equals(endWireLabel)) {
+            if (component instanceof Wire && component.getLabel().equals(endWireLabel)) {
                 this.endWire = (Wire) component;
                 return;
             }
