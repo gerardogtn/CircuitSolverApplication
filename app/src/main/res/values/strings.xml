@@ -11,4 +11,9 @@
     <string name="import_circuit">Import</string>
     <string name="clear">Clear</string>
     <string name="file_name_between_3_and_23">File name must be between 3 and 23 characters long</string>
+    <string name="start_wire">Start wire</string>
+    <string name="end_wire">End wire</string>
+    <string name="solution_file">File to write solution</string>
+    <string name="action_write_solutions">write_solutions</string>
+    <string name="label_is_not_wire">The label is not a wire</string>
 </resources>
