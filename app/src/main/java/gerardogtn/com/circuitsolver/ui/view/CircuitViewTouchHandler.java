@@ -47,8 +47,8 @@ public class CircuitViewTouchHandler {
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
-                moveCurrentComponent();
                 mWasMoved = true;
+                moveCurrentComponent();
                 break;
             case MotionEvent.ACTION_CANCEL:
                 mCurrentSelectedComponent = null;
@@ -82,6 +82,7 @@ public class CircuitViewTouchHandler {
                     mPreviouslySelectedComponent != null &&
                     !mCurrentSelectedComponent.equals(mPreviouslySelectedComponent)) {
                 mCircuit.addConnection(mPreviouslySelectedComponent, mCurrentSelectedComponent);
+                mCurrentSelectedComponent = null;
                 mCircuitView.invalidate();
             }
         } catch (CannotConnectTwoGatesException e) {
