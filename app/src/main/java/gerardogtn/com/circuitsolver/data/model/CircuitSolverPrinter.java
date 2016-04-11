@@ -20,7 +20,8 @@ public class CircuitSolverPrinter {
 
     private static void appendCsvToBuffer() {
         for (CircuitSolution solution : CircuitSolver.solve(Circuit.getInstance())) {
-            for (Wire currentWire : sWires) {
+            for (int i = 0; i < sWires.size() - 1; i++) {
+                Wire currentWire = sWires.get(i);
                 boolean found = false;
                 for (Wire currentSolutionWire : solution.getWires()) {
                     if (currentWire.equals(currentSolutionWire)) {
@@ -33,15 +34,30 @@ public class CircuitSolverPrinter {
                     sBuffer.append("0, ");
                 }
             }
+
+            boolean found = false;
+            Wire currentWire = sWires.getLast();
+            for (Wire currentSolutionWire : solution.getWires()) {
+                if (currentWire.equals(currentSolutionWire)) {
+                    sBuffer.append("1");
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                sBuffer.append("0");
+            }
             sBuffer.append("\n");
         }
     }
 
     private static void appendHeaderToBuffer() {
-        for (Wire w : sWires) {
+        for (int i = 0; i < sWires.size() - 1; i++) {
+            Wire w = sWires.get(i);
             sBuffer.append(w.toString());
             sBuffer.append(", ");
         }
+        sBuffer.append(sWires.getLast().toString());
         sBuffer.append("\n");
     }
 
