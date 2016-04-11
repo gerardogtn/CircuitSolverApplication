@@ -93,6 +93,14 @@ public class Circuit {
         return components;
     }
 
+    public void setComponents(LinkedList<CircuitComponent> components) {
+        this.components = components;
+    }
+
+    public void setConnections(List<CircuitConnection> connections) {
+        this.connections = connections;
+    }
+
     public LinkedList<Wire> getWires() {
         LinkedList<Wire> wires = new LinkedList<>();
         for (CircuitComponent c : components) {

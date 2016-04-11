@@ -5,16 +5,35 @@ package gerardogtn.com.circuitsolver.data.database;
  */
 public class CircuitDatabaseConstants {
 
+    public static class CircuitSchema {
+        public static final String TABLE_NAME = "circuit";
 
+        public static final String ID = "id";
+        public static final String START_WIRE = "start_wire";
+        public static final String END_WIRE = "end_wire";
+
+        public static final String COLUMNS[] = new String[]{
+                START_WIRE, END_WIRE
+        };
+
+        public static final String CREATE_TABLE =
+                "CREATE TABLE " + TABLE_NAME + " (" +
+                        ID            + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        START_WIRE + " VARCHAR(4) NULL, " +
+                        END_WIRE  + " VARCHAR(4) NULL" +
+                        " ); ";
+    }
+    
+    
     public static class CircuitConnectionSchema {
 
         public static final String TABLE_NAME = "circuit_connections";
 
-        private static final String ID = "id";
-        private static final String ENTRY_NODE_ID = "id_entry_node";
-        private static final String EXIT_NODE_ID = "id_exit_node";
+        public static final String ID = "id";
+        public static final String ENTRY_NODE_ID = "id_entry_node";
+        public static final String EXIT_NODE_ID = "id_exit_node";
 
-        private static final String COLUMNS[] = new String[]{
+        public static final String COLUMNS[] = new String[]{
                 ENTRY_NODE_ID, EXIT_NODE_ID
         };
 
@@ -30,11 +49,11 @@ public class CircuitDatabaseConstants {
     public static class WireSchema {
         public static final String TABLE_NAME = "wires";
 
-        private static final String LABEL = "label";
-        private static final String X_POSITION = "x_position";
-        private static final String Y_POSITION = "y_position";
+        public static final String LABEL = "label";
+        public static final String X_POSITION = "x_position";
+        public static final String Y_POSITION = "y_position";
 
-        private static final String COLUMNS[] = new String[] {
+        public static final String COLUMNS[] = new String[] {
                LABEL, X_POSITION, Y_POSITION
         };
 
@@ -50,11 +69,11 @@ public class CircuitDatabaseConstants {
     public static class GateSchema {
         public static final String TABLE_NAME = "gates";
 
-        private static final String LABEL = "label";
-        private static final String X_POSITION = "x_position";
-        private static final String Y_POSITION = "y_position";
+        public static final String LABEL = "label";
+        public static final String X_POSITION = "x_position";
+        public static final String Y_POSITION = "y_position";
 
-        private static final String COLUMNS[] = new String[] {
+        public static final String COLUMNS[] = new String[] {
                 LABEL, X_POSITION, Y_POSITION
         };
 

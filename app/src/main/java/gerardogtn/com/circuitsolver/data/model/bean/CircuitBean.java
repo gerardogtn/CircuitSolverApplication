@@ -39,12 +39,28 @@ public class CircuitBean {
         this.components = components;
     }
 
+    public void setComponents(CircuitComponent... components) {
+        LinkedList<CircuitComponent> componentsList = new LinkedList<>();
+        for (CircuitComponent component : components) {
+            componentsList.add(component);
+        }
+        setComponents(componentsList);
+    }
+
     public ArrayList<CircuitConnection> getConnections() {
         return connections;
     }
 
     public void setConnections(ArrayList<CircuitConnection> connections) {
         this.connections = connections;
+    }
+
+    public void setConnections(CircuitConnection... connections) {
+        ArrayList<CircuitConnection> connectionList = new ArrayList<>();
+        for (CircuitConnection connection : connections) {
+            connectionList.add(connection);
+        }
+        setConnections(connectionList);
     }
 
     public Wire getStartWire() {
@@ -61,5 +77,29 @@ public class CircuitBean {
 
     public void setEndWire(Wire endWire) {
         this.endWire = endWire;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CircuitBean that = (CircuitBean) o;
+
+        if (!components.equals(that.components)) return false;
+        if (!connections.equals(that.connections)) return false;
+        if (startWire != null ? !startWire.equals(that.startWire) : that.startWire != null)
+            return false;
+        return endWire != null ? endWire.equals(that.endWire) : that.endWire == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = components.hashCode();
+        result = 31 * result + connections.hashCode();
+        result = 31 * result + (startWire != null ? startWire.hashCode() : 0);
+        result = 31 * result + (endWire != null ? endWire.hashCode() : 0);
+        return result;
     }
 }
