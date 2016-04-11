@@ -8,7 +8,7 @@ public class CircuitDatabaseConstants {
 
     public static class CircuitConnectionSchema {
 
-        private static final String TABLE_NAME = "circuit_connections";
+        public static final String TABLE_NAME = "circuit_connections";
 
         private static final String ID = "id";
         private static final String ENTRY_NODE_ID = "id_entry_node";
@@ -28,7 +28,7 @@ public class CircuitDatabaseConstants {
     }
 
     public static class WireSchema {
-        private static final String TABLE_NAME = "wires";
+        public static final String TABLE_NAME = "wires";
 
         private static final String LABEL = "label";
         private static final String X_POSITION = "x_position";
@@ -48,7 +48,7 @@ public class CircuitDatabaseConstants {
     }
 
     public static class GateSchema {
-        private static final String TABLE_NAME = "gates";
+        public static final String TABLE_NAME = "gates";
 
         private static final String LABEL = "label";
         private static final String X_POSITION = "x_position";
