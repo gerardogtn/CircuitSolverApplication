@@ -2,7 +2,6 @@ package gerardogtn.com.circuitsolver.ui.view;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Point;
 import android.graphics.Rect;
 
 import gerardogtn.com.circuitsolver.data.model.Circuit;
@@ -46,36 +45,7 @@ public class CircuitViewDrawer {
 
     private void drawDirectedLine(CircuitComponent origin, CircuitComponent destination, Paint connectionPaint) {
         mDrawCanvas.drawLine(origin.getX(), origin.getY(), destination.getX(), destination.getY(), connectionPaint);
-        Point circle = getPosPoint(origin.getX(), origin.getY(), destination.getX(), destination.getY());
         connectionPaint.setStyle(Paint.Style.FILL);
-        mDrawCanvas.drawCircle(circle.x, circle.y, CircuitViewSizeConstant.sDirectionIndicatorRadius, connectionPaint);
-    }
-
-    private Point getPosPoint(float x0, float y0, float x1, float y1) {
-
-        Point point = new Point();
-
-        if (Math.abs(x1 - x0) < 40) {
-            point.x = (int) x1;
-            if (y0 < y1) {
-                point.y = (int) y1 - 50;
-            } else {
-                point.y = (int) y1 + 50;
-            }
-        } else {
-            float m = (y1 - y0) / (x1 - x0);
-            float b = y0 - m * x0;
-            float totalLength = (float) Math.sqrt(Math.pow((y1 - y0), 2) + Math.pow((x1 - x0), 2));
-            float xEval = (totalLength - 50) * (float) Math.cos(Math.atan((y1 - y0) / (x1 - x0)));
-            point.x = (int) (x0 - xEval);
-            if (x0 < x1) {
-                if (!(x0 < point.x && point.x < x1)) point.x = (int) (x0 + xEval);
-            } else {
-                if (!(x1 < point.x && point.x < x0)) point.x = (int) (x0 + xEval);
-            }
-            point.y = (int) (m * point.x + b);
-        }
-        return point;
     }
 
     public void drawComponents() {
@@ -104,7 +74,7 @@ public class CircuitViewDrawer {
         float y = getCenteredYCoordinate(paint);
         mDrawCanvas.drawRect(mCurrentDrawingComponent.getX() - CircuitViewSizeConstant.sSquareHalfSide,
                 y - CircuitViewSizeConstant.sSquareHalfSide,
-                mCurrentDrawingComponent.getX() +  CircuitViewSizeConstant.sSquareHalfSide,
+                mCurrentDrawingComponent.getX() + CircuitViewSizeConstant.sSquareHalfSide,
                 y + CircuitViewSizeConstant.sSquareHalfSide,
                 paint);
 
@@ -142,7 +112,7 @@ public class CircuitViewDrawer {
                 mCurrentDrawingComponent.getY(), paint);
     }
 
-    private Paint getPaintForComponentLabel( ) {
+    private Paint getPaintForComponentLabel() {
         Paint paint;
         if (mCurrentDrawingComponent instanceof Gate) {
             paint = CircuitViewPaintConstant.GATE_TEXT_PAINT;
