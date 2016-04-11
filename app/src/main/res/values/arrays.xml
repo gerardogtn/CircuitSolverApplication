@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="circuit_components">
-        <item>@string/gate</item>
         <item>@string/wire</item>
+        <item>@string/gate</item>
     </string-array>
 </resources>
