@@ -13,14 +13,14 @@ public class CircuitDatabaseConstants {
         public static final String END_WIRE = "end_wire";
 
         public static final String COLUMNS[] = new String[]{
-                START_WIRE, END_WIRE
+                ID, START_WIRE, END_WIRE
         };
 
         public static final String CREATE_TABLE =
                 "CREATE TABLE " + TABLE_NAME + " (" +
                         ID            + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                        START_WIRE + " VARCHAR(4) NULL, " +
-                        END_WIRE  + " VARCHAR(4) NULL" +
+                        START_WIRE + " VARCHAR(4), " +
+                        END_WIRE  + " VARCHAR(4)" +
                         " ); ";
     }
     
@@ -34,7 +34,7 @@ public class CircuitDatabaseConstants {
         public static final String EXIT_NODE_ID = "id_exit_node";
 
         public static final String COLUMNS[] = new String[]{
-                ENTRY_NODE_ID, EXIT_NODE_ID
+                ID, ENTRY_NODE_ID, EXIT_NODE_ID
         };
 
         public static final String CREATE_TABLE =
@@ -63,7 +63,6 @@ public class CircuitDatabaseConstants {
                         X_POSITION + " REAL NOT NULL, " +
                         Y_POSITION + " REAL NOT NULL" +
                         " ); ";
-
     }
 
     public static class GateSchema {

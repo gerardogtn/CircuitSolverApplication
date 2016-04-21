@@ -3,10 +3,12 @@ package gerardogtn.com.circuitsolver.data.model.bean;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 
 import gerardogtn.com.circuitsolver.data.model.CircuitComponent;
 import gerardogtn.com.circuitsolver.data.model.CircuitConnection;
+import gerardogtn.com.circuitsolver.data.model.Gate;
 import gerardogtn.com.circuitsolver.data.model.Wire;
 
 /**
@@ -35,6 +37,10 @@ public class CircuitBean {
         return components;
     }
 
+    public void addComponent(CircuitComponent component) {
+        components.push(component);
+    }
+
     public void setComponents(LinkedList<CircuitComponent> components) {
         this.components = components;
     }
@@ -47,6 +53,14 @@ public class CircuitBean {
         setComponents(componentsList);
     }
 
+    public void addWires(Wire... wires) {
+        Collections.addAll(components, wires);
+    }
+
+    public void addGates(Gate... gates) {
+        Collections.addAll(components, gates);
+    }
+
     public ArrayList<CircuitConnection> getConnections() {
         return connections;
     }
@@ -57,9 +71,7 @@ public class CircuitBean {
 
     public void setConnections(CircuitConnection... connections) {
         ArrayList<CircuitConnection> connectionList = new ArrayList<>();
-        for (CircuitConnection connection : connections) {
-            connectionList.add(connection);
-        }
+        Collections.addAll(connectionList, connections);
         setConnections(connectionList);
     }
 
@@ -77,6 +89,24 @@ public class CircuitBean {
 
     public void setEndWire(Wire endWire) {
         this.endWire = endWire;
+    }
+
+    public Wire getWire(String label) {
+        for (CircuitComponent component : components) {
+            if (component instanceof Wire && component.getLabel().equals(label)) {
+                return (Wire) component;
+            }
+        }
+        throw new IllegalArgumentException("Label " + label + " could not be found");
+    }
+
+    public CircuitComponent getComponent(String label) {
+        for (CircuitComponent component : components) {
+            if (component.getLabel().equals(label)) {
+                return component;
+            }
+        }
+        throw new IllegalArgumentException("Component: " + label + " could not be found");
     }
 
     @Override
@@ -101,5 +131,15 @@ public class CircuitBean {
         result = 31 * result + (startWire != null ? startWire.hashCode() : 0);
         result = 31 * result + (endWire != null ? endWire.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "CircuitBean{" +
+                "components=" + components +
+                ", connections=" + connections +
+                ", startWire=" + startWire +
+                ", endWire=" + endWire +
+                '}';
     }
 }

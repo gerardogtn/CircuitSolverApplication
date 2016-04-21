@@ -39,4 +39,12 @@ public class CircuitConnection {
         result = 31 * result + exitComponent.hashCode();
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "CircuitConnection{" +
+                "entryComponent=" + entryComponent +
+                ", exitComponent=" + exitComponent +
+                '}';
+    }
 }

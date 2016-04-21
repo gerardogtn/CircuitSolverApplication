@@ -5,6 +5,7 @@ import android.graphics.PointF;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -116,9 +117,7 @@ public class Circuit {
     }
 
     public void addComponents(CircuitComponent... components) {
-        for (CircuitComponent component : components) {
-            addComponent(component);
-        }
+        Collections.addAll(this.components, components);
     }
 
     public void addConnection(CircuitComponent entryComponent, CircuitComponent exitComponent) {
