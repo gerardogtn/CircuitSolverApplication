@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -31,6 +32,8 @@ import static gerardogtn.com.circuitsolver.data.database.CircuitDatabaseConstant
  */
 public class CircuitSqlRepository implements CircuitDatabaseRepository {
 
+
+    private static final String TAG = "CircuitSqlRepository";
     private static CircuitSqlRepository sInstance;
     private static SQLiteOpenHelper sOpenHelper;
     private static SQLiteDatabase sDatabase;
@@ -45,11 +48,11 @@ public class CircuitSqlRepository implements CircuitDatabaseRepository {
     }
 
     public static void reset() {
-        if (sContext != null) {
-            sContext.deleteDatabase(CircuitSchema.TABLE_NAME);
-            sContext.deleteDatabase(CircuitConnectionSchema.TABLE_NAME);
-            sContext.deleteDatabase(WireSchema.TABLE_NAME);
-            sContext.deleteDatabase(GateSchema.TABLE_NAME);
+        if (sDatabase != null) {
+            sDatabase.delete(CircuitSchema.TABLE_NAME, null, null);
+            sDatabase.delete(CircuitConnectionSchema.TABLE_NAME, null, null);
+            sDatabase.delete(WireSchema.TABLE_NAME, null, null);
+            sDatabase.delete(GateSchema.TABLE_NAME, null, null);
         }
     }
 
@@ -78,15 +81,20 @@ public class CircuitSqlRepository implements CircuitDatabaseRepository {
 
     private void addCircuitData() {
         ContentValues contentValues = new ContentValues();
+        boolean insert = false;
 
         if (sCircuitBean.getStartWire() != null) {
+            insert = true;
             contentValues.put(CircuitSchema.START_WIRE, sCircuitBean.getStartWire().getLabel());
         }
         if (sCircuitBean.getEndWire() != null) {
+            insert = true;
             contentValues.put(CircuitSchema.END_WIRE, sCircuitBean.getEndWire().getLabel());
         }
 
-        sDatabase.insert(CircuitSchema.TABLE_NAME, null, contentValues);
+        if (insert) {
+            sDatabase.insert(CircuitSchema.TABLE_NAME, null, contentValues);
+        }
     }
 
     private void addCircuitComponents() {
@@ -232,6 +240,14 @@ public class CircuitSqlRepository implements CircuitDatabaseRepository {
         CircuitTranslator.updateCircuitSingleton(get());
     }
 
+    /**
+     * Resets the database and saves Circuit singleton to database.
+     */
+    public void updateDatabaseFromCircuit() {
+        if (!Circuit.getInstance().isEmpty()) {
+            add(Circuit.getInstance());
+        }
+    }
 
     private static class CircuitDbOpenHelper extends SQLiteOpenHelper {
 

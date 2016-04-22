@@ -31,7 +31,7 @@ public class Circuit {
     @SerializedName("end_wire")
     private Wire endWire;
 
-    private static Circuit mInstance;
+    private static Circuit sInstance;
 
     private Circuit() {
         components = new LinkedList<>();
@@ -39,15 +39,19 @@ public class Circuit {
     }
 
     public static Circuit getInstance() {
-        if (mInstance == null) {
-            mInstance = new Circuit();
+        if (sInstance == null) {
+            sInstance = new Circuit();
         }
-        return mInstance;
+        return sInstance;
     }
 
     public static Circuit getNewInstance() {
-        mInstance = new Circuit();
-        return mInstance;
+        sInstance = new Circuit();
+        return sInstance;
+    }
+
+    public boolean isEmpty() {
+        return components.isEmpty();
     }
 
     public Wire getEndWire() {
