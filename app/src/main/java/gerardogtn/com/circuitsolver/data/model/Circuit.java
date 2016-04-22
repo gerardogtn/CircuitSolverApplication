@@ -5,6 +5,7 @@ import android.graphics.PointF;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -30,7 +31,7 @@ public class Circuit {
     @SerializedName("end_wire")
     private Wire endWire;
 
-    private static Circuit mInstance;
+    private static Circuit sInstance;
 
     private Circuit() {
         components = new LinkedList<>();
@@ -38,15 +39,19 @@ public class Circuit {
     }
 
     public static Circuit getInstance() {
-        if (mInstance == null) {
-            mInstance = new Circuit();
+        if (sInstance == null) {
+            sInstance = new Circuit();
         }
-        return mInstance;
+        return sInstance;
     }
 
     public static Circuit getNewInstance() {
-        mInstance = new Circuit();
-        return mInstance;
+        sInstance = new Circuit();
+        return sInstance;
+    }
+
+    public boolean isEmpty() {
+        return components.isEmpty();
     }
 
     public Wire getEndWire() {
@@ -93,6 +98,14 @@ public class Circuit {
         return components;
     }
 
+    public void setComponents(LinkedList<CircuitComponent> components) {
+        this.components = components;
+    }
+
+    public void setConnections(List<CircuitConnection> connections) {
+        this.connections = connections;
+    }
+
     public LinkedList<Wire> getWires() {
         LinkedList<Wire> wires = new LinkedList<>();
         for (CircuitComponent c : components) {
@@ -108,9 +121,7 @@ public class Circuit {
     }
 
     public void addComponents(CircuitComponent... components) {
-        for (CircuitComponent component : components) {
-            addComponent(component);
-        }
+        Collections.addAll(this.components, components);
     }
 
     public void addConnection(CircuitComponent entryComponent, CircuitComponent exitComponent) {

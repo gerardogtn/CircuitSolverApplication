@@ -19,12 +19,11 @@ import gerardogtn.com.circuitsolver.util.exception.NoTextPaintForComponentExcept
  */
 public class CircuitViewDrawer {
 
-    private Circuit mCircuit;
     private Canvas mDrawCanvas;
     private CircuitComponent mCurrentDrawingComponent;
 
     public CircuitViewDrawer() {
-        mCircuit = Circuit.getInstance();
+
     }
 
     public void draw(Canvas canvas) {
@@ -35,7 +34,7 @@ public class CircuitViewDrawer {
     }
 
     public void drawConnections() {
-        for (CircuitConnection circuitConnection : mCircuit.getConnections()) {
+        for (CircuitConnection circuitConnection : Circuit.getInstance().getConnections()) {
             CircuitComponent origin = circuitConnection.getEntryComponent();
             CircuitComponent destination = circuitConnection.getExitComponent();
             Paint connectionPaint = CircuitViewPaintConstant.CONNECTION_PAINT;
@@ -49,7 +48,7 @@ public class CircuitViewDrawer {
     }
 
     public void drawComponents() {
-        for (CircuitComponent component : mCircuit.getComponents()) {
+        for (CircuitComponent component : Circuit.getInstance().getComponents()) {
             mCurrentDrawingComponent = component;
             if (component instanceof Gate) {
                 drawGate();

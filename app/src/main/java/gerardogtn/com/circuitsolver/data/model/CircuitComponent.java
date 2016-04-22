@@ -53,4 +53,13 @@ public abstract class CircuitComponent {
     public int hashCode() {
         return label.hashCode();
     }
+
+    @Override
+    public String toString() {
+        return "CircuitComponent{" +
+                "label='" + label + '\'' +
+                ", x=" + x +
+                ", y=" + y +
+                '}';
+    }
 }
