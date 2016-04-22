@@ -21,6 +21,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import gerardogtn.com.circuitsolver.R;
+import gerardogtn.com.circuitsolver.data.database.CircuitSqlRepository;
 import gerardogtn.com.circuitsolver.data.model.Circuit;
 import gerardogtn.com.circuitsolver.data.model.CircuitSolverPrinter;
 import gerardogtn.com.circuitsolver.data.model.Gate;
@@ -44,12 +45,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         mCircuitSolveListener = new MyCircuitSolveListener();
-    }
-
-    @OnClick(R.id.fab_add_circuit_component)
-    public void onAddCircuitComponent() {
-        AddCircuitComponentDialog dialog = new AddCircuitComponentDialog();
-        dialog.show(getSupportFragmentManager(), AddCircuitComponentDialog.TAG);
+        CircuitSqlRepository.getInstance().restoreCircuitFromDatabase();
     }
 
     public void addCircuitGate(String label) {
@@ -105,8 +101,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onClearOptionSelected() {
-        Circuit.getInstance().clear();
+        Circuit.getNewInstance();
         mCircuitView.invalidate();
+        CircuitSqlRepository.reset();
+    }
+
+    @OnClick(R.id.fab_add_circuit_component)
+    public void onAddCircuitComponent() {
+        AddCircuitComponentDialog dialog = new AddCircuitComponentDialog();
+        dialog.show(getSupportFragmentManager(), AddCircuitComponentDialog.TAG);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        CircuitSqlRepository.getInstance().updateDatabaseFromCircuit();
     }
 
     private class ExportCircuitTask extends AsyncTask<Void, Void, Void> {
