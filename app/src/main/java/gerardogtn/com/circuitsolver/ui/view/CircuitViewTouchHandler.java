@@ -17,7 +17,6 @@ public class CircuitViewTouchHandler {
 
     private static final String TAG = "CircuitViewTouchHandler";
 
-    private Circuit mCircuit;
     private CircuitComponent mCurrentSelectedComponent;
     private CircuitComponent mPreviouslySelectedComponent;
     private CircuitView mCircuitView;
@@ -27,7 +26,6 @@ public class CircuitViewTouchHandler {
     private boolean mWasMoved;
 
     public CircuitViewTouchHandler(CircuitView circuitView) {
-        mCircuit = Circuit.getInstance();
         mCircuitView = circuitView;
         mCurrentTouchPosition = new PointF();
     }
@@ -70,7 +68,7 @@ public class CircuitViewTouchHandler {
 
     private void initializeCurrentCircuitComponent() {
         try {
-            mCurrentSelectedComponent = mCircuit.getComponentAtPosition(mCurrentTouchPosition);
+            mCurrentSelectedComponent = Circuit.getInstance().getComponentAtPosition(mCurrentTouchPosition);
         } catch (CircuitComponentNotFoundException e) {
             mCurrentSelectedComponent = null;
         }
@@ -81,7 +79,7 @@ public class CircuitViewTouchHandler {
             if (mCurrentSelectedComponent != null &&
                     mPreviouslySelectedComponent != null &&
                     !mCurrentSelectedComponent.equals(mPreviouslySelectedComponent)) {
-                mCircuit.addConnection(mPreviouslySelectedComponent, mCurrentSelectedComponent);
+                Circuit.getInstance().addConnection(mPreviouslySelectedComponent, mCurrentSelectedComponent);
                 mCurrentSelectedComponent = null;
                 mCircuitView.invalidate();
             }
